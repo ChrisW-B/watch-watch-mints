@@ -1,7 +1,6 @@
 import * as Realm from 'realm-web';
 
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
-import { concatPagination } from '@apollo/client/utilities';
 
 // Connect to your MongoDB Realm app
 const app = new Realm.App(process.env.REACT_APP_REALM_ID as string);
@@ -25,7 +24,13 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          chats: concatPagination(['timeStampGte']),
+          chats: {
+            keyArgs: ['timeStampGte'],
+            merge: (previous = [], incoming) => {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-assignment
+              return [...new Set([...previous, ...incoming])];
+            },
+          },
         },
       },
     },

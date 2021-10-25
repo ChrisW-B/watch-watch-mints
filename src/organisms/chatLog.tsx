@@ -1,19 +1,9 @@
 import { DateTime } from 'luxon';
 import React from 'react';
+import TypingMessage from 'src/molecules/typingMessage';
 
-import styled from '@emotion/styled';
-
-import ChatMessage from '../molecules/chatMessage';
 import { useChatListQuery } from '../schema/__generated__/chatList.generated';
-
-const ChatList = styled.ol`
-  list-style: none;
-  margin: 0;
-  padding: 1.2rem;
-  display: block;
-  overflow: auto;
-  flex: 1;
-`;
+import ChatList from './chatList';
 
 type OwnProps = {
   startDate: DateTime;
@@ -25,16 +15,21 @@ const ChatLog: React.FC<OwnProps> = ({ startDate }) => {
     notifyOnNetworkStatusChange: true,
   });
 
+  const timeSinceStart = React.useRef(startDate.diffNow());
+
   const messagesFinishTime = React.useRef(
     DateTime.fromISO(data?.chats?.[data.chats.length - 1]?.timestamp ?? '')
       .setZone('utc')
-      .minus(startDate.diffNow()),
+      .minus(timeSinceStart.current),
   );
 
   React.useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     const interval = setInterval(async () => {
-      if (messagesFinishTime.current && DateTime.now().toUTC() > messagesFinishTime.current) {
+      if (
+        messagesFinishTime?.current?.isValid &&
+        DateTime.now().toUTC() > messagesFinishTime.current
+      ) {
         clearInterval(interval);
         await fetchMore({
           variables: { timeStampGte: data?.chats?.[data.chats.length - 1]?.timestamp ?? '' },
@@ -45,14 +40,28 @@ const ChatLog: React.FC<OwnProps> = ({ startDate }) => {
     return () => clearInterval(interval);
   }, [data?.chats, fetchMore]);
 
+  React.useEffect(() => {
+    messagesFinishTime.current = DateTime.fromISO(
+      data?.chats?.[data.chats.length - 1]?.timestamp ?? '',
+    )
+      .setZone('utc')
+      .minus(timeSinceStart.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.chats?.length]);
+
   return (
-    <ChatList>
-      {data?.chats.map((message) =>
-        message ? (
-          <ChatMessage diffFromToday={startDate.diffNow()} key={message.id} {...message} />
-        ) : null,
-      )}
-    </ChatList>
+    <>
+      <ChatList diffFromToday={timeSinceStart.current} chats={data?.chats ?? []} />
+      <TypingMessage
+        diffFromToday={timeSinceStart.current}
+        messagesAuthors={
+          data?.chats.map((chat) => ({
+            authorName: chat?.author?.username ?? '',
+            postTime: DateTime.fromISO(chat?.timestamp ?? ''),
+          })) ?? []
+        }
+      />
+    </>
   );
 };
 

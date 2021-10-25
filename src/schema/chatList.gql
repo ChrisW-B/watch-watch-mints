@@ -1,5 +1,5 @@
 query chatList($timeStampGte: String!) {
-  chats(sortBy: TIMESTAMP_ASC, limit: 50, query: { timestamp_gt: $timeStampGte }) {
+  chats(sortBy: TIMESTAMP_ASC, limit: 10, query: { timestamp_gt: $timeStampGte }) {
     id
     ...chat
   }
