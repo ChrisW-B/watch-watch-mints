@@ -1,0 +1,47 @@
+overwrite: true
+schema:
+  - ${REACT_APP_GRAPHQL_API:https://realm.mongodb.com/api/client/v2.0/app/application-0-dsude/graphql}:
+      headers:
+        apiKey: ${REACT_APP_REALM_KEY}
+documents: ./src/**/*.gql
+generates:
+  ./src/typings/graphql-chat.generated.d.ts:
+    plugins:
+      - typescript-graphql-files-modules
+  ./src/schema/chat.generated.graphql:
+    plugins:
+      - schema-ast
+  ./src/schema/apolloFragments/chatFragmentTypes.generated.json:
+    plugins:
+      - fragment-matcher
+    config:
+      useExplicitTyping: true
+  ./src/schema/dataModel/chat.generated.tsx:
+    plugins:
+      - typescript
+    config:
+      scalars:
+        Decimal: string
+        Date: string
+        DateTime: string
+        JSONString: string
+      immutableTypes: true
+      namingConvention:
+        enumValues: keep
+  ./src:
+    preset: near-operation-file
+    presetConfig:
+      baseTypesPath: schema/dataModel/chat.generated.tsx
+      extension: .generated.ts
+      folder: __generated__
+    plugins:
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      dedupeOperationSuffix: true
+      pureMagicComment: true
+      scalars:
+        Decimal: string
+        DateTime: string
+        JSONString: string
+        Date: string

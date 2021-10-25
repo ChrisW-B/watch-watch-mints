@@ -1,0 +1,55 @@
+query chatList($timeStampGte: String!) {
+  chats(sortBy: TIMESTAMP_ASC, limit: 50, query: { timestamp_gt: $timeStampGte }) {
+    id
+    ...chat
+  }
+}
+
+fragment chat on Chat {
+  id
+  content
+  timestamp
+  reactions {
+    ...chatReaction
+  }
+  mentions {
+    id
+    ...mention
+  }
+  author {
+    id
+    ...author
+  }
+  attachments {
+    id
+    ...chatAttachment
+  }
+}
+
+fragment chatAttachment on ChatAttachment {
+  id
+  filename
+  height
+  size
+  url
+  width
+}
+
+fragment chatReaction on ChatReaction {
+  count
+  emoji {
+    id
+    name
+  }
+}
+
+fragment mention on ChatMention {
+  id
+  username
+}
+
+fragment author on ChatAuthor {
+  id
+  username
+  avatar
+}

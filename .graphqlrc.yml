@@ -1,0 +1,6 @@
+schema: src/schema/chat.generated.graphql
+documents: '**/*.gql'
+extensions:
+  endpoints:
+    default:
+      url: ${GRAPHQL_API:https://realm.mongodb.com/api/client/v2.0/app/application-0-dsude/graphql}
