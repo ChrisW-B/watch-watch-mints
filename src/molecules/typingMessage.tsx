@@ -9,10 +9,11 @@ interface OwnProps {
 }
 
 const TypingPara = styled.p`
-  padding: 0.4rem 1.2rem;
+  padding: 0 1.2rem 0.4rem;
   white-space: nowrap;
-  height: 2rem;
   grid-area: typing-message;
+  color: var(--dark-grey);
+  font-size: 0.8rem;
 `;
 
 const toSentence = (arr: string[]) =>

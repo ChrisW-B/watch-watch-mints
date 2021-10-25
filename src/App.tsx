@@ -13,7 +13,7 @@ const MainGrid = styled.main`
   grid-template:
     'sidebar header' 4rem
     'sidebar chat' auto
-    'sidebar typing-message' 2rem
+    'sidebar typing-message' min-content
     / 16rem auto;
   height: 100vh;
   overflow-y: hidden;

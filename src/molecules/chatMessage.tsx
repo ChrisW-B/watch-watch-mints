@@ -16,7 +16,7 @@ const ChatMessageItem = styled.li`
     'avatar content' max-content
     'avatar attachments' min-content
     / 50px auto;
-  margin: 1.2rem 0;
+  margin: 0.8rem 0;
   list-style: none;
   padding: 0;
 `;

@@ -15,7 +15,7 @@ const List = styled.ol`
 
 const ListWrapper = styled.div`
   margin: 0;
-  padding: 1.2rem;
+  padding: 0 1.2rem;
   overflow: auto;
   flex: 1;
   display: block;

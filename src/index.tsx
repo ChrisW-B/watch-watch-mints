@@ -15,28 +15,36 @@ const globalCss = css`
     --font-family-body: 'Helvetica', 'Arial', sans-serif;
 
     /* light mode colors */
-    --light-mode-dark: #1a0b00;
-    --light-mode-light-grey: #c2c5c5;
-    --light-mode-link-blue: #565cdc;
-    --light-mode-white: #ffff;
+    --light-mode-dark: hsl(223, 6%, 23%);
+    --light-mode-off-dark: hsl(223, 7%, 20%);
+    --light-mode-light-grey: hsl(180, 3%, 77%);
+    --light-mode-dark-grey: hsl(180, 3%, 28%);
+    --light-mode-link-blue: hsl(237, 66%, 60%);
+    --light-mode-white: hsl(0, 0%, 100%);
 
     /* dark mode colors */
-    --dark-mode-dark: #ffff;
-    --dark-mode-light-grey: #708696;
-    --dark-mode-link-blue: #565cdc;
-    --dark-mode-white: #2f3136;
+    --dark-mode-dark: hsl(0, 0%, 100%);
+    --dark-mode-off-dark: hsl(223, 7%, 20%);
+    --dark-mode-light-grey: hsl(205, 15%, 51%);
+    --dark-mode-dark-grey: hsl(205, 10%, 90%);
+    --dark-mode-link-blue: hsl(237, 66%, 60%);
+    --dark-mode-white: hsl(223, 6%, 27%);
 
     /* set defaults to be overridden */
     --dark: var(--dark-mode-dark);
     --light-grey: var(--dark-mode-light-grey);
+    --dark-grey: var(--light-mode-dark-grey);
     --link-blue: var(--dark-mode-link-blue);
     --white: var(--dark-mode-white);
+    --off-dark: var(---dark-mode-off-dark);
 
     @media (prefers-color-scheme: dark) {
       --dark: var(--dark-mode-dark);
       --light-grey: var(--dark-mode-light-grey);
+      --dark-grey: var(--dark-mode-dark-grey);
       --link-blue: var(--dark-mode-link-blue);
       --white: var(--dark-mode-white);
+      --off-dark: var(--dark-mode-off-dark);
     }
 
     @media (prefers-color-scheme: light) {
@@ -44,6 +52,7 @@ const globalCss = css`
       --light-grey: var(--light-mode-light-grey);
       --link-blue: var(--light-mode-link-blue);
       --white: var(--light-mode-white);
+      --off-dark: var(--light-mode-off-dark);
     }
   }
 
