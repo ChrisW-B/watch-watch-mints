@@ -18,6 +18,8 @@ const ListWrapper = styled.div`
   padding: 1.2rem;
   overflow: auto;
   flex: 1;
+  display: block;
+  grid-area: chat;
 `;
 
 type OwnProps = {

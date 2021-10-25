@@ -12,6 +12,7 @@ const TypingPara = styled.p`
   padding: 0.4rem 1.2rem;
   white-space: nowrap;
   height: 2rem;
+  grid-area: typing-message;
 `;
 
 const toSentence = (arr: string[]) =>

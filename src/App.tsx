@@ -4,13 +4,27 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import { DAYS_AGO } from './constants';
+import Header from './molecules/header';
+import Sidebar from './molecules/sideBar';
 import ChatLog from './organisms/chatLog';
 
-const MainFlex = styled.main`
-  display: flex;
-  flex-flow: column nowrap;
+const MainGrid = styled.main`
+  display: grid;
+  grid-template:
+    'sidebar header' 4rem
+    'sidebar chat' auto
+    'sidebar typing-message' 2rem
+    / 16rem auto;
   height: 100vh;
   overflow-y: hidden;
+
+  @media (max-width: 680px) {
+    grid-template:
+      'header' 4rem
+      'chat' auto
+      'typing-message' 2rem
+      / auto;
+  }
 `;
 
 const getParams = (location: Location) => {
@@ -25,7 +39,13 @@ const App = (): React.ReactElement => {
   const startTime = time
     ? DateTime.fromISO(time).setZone('utc')
     : DateTime.now().setZone('utc').minus(DAYS_AGO);
-  return <MainFlex>{startTime ? <ChatLog startDate={startTime} /> : null}</MainFlex>;
+  return (
+    <MainGrid>
+      <Sidebar />
+      <Header />
+      {startTime ? <ChatLog startDate={startTime} /> : null}
+    </MainGrid>
+  );
 };
 
 export default App;
