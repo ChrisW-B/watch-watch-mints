@@ -4,7 +4,7 @@ import { ReactMarkdownProps } from 'react-markdown/lib/complex-types';
 
 import styled from '@emotion/styled';
 
-import { MentionFragment } from '../schema/__generated__/chatList.generated';
+import { MentionFragment } from '../schema/__generated__/chatMessages.generated';
 
 const MarkdownBlockquote = styled.blockquote`
   border-left: 4px solid var(--light-grey);

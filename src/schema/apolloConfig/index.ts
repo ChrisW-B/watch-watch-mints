@@ -25,7 +25,7 @@ const client = new ApolloClient({
       Query: {
         fields: {
           chats: {
-            keyArgs: ['timeStampGte'],
+            keyArgs: ['timeStampGte', 'sortBy'],
             merge: (previous = [], incoming) => {
               // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-assignment
               return [...new Set([...previous, ...incoming])];

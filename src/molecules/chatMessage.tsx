@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import DiscordAvatar from '../atoms/avatar';
 import DiscordAttachment from '../atoms/chatAttachment';
 import ChatText from '../atoms/chatText';
-import { ChatFragment } from '../schema/__generated__/chatList.generated';
+import { ChatFragment } from '../schema/__generated__/chatMessages.generated';
 
 const ChatMessageItem = styled.li`
   display: grid;
@@ -35,25 +35,20 @@ const ChatTimestamp = styled.a`
   }
 `;
 
-const ChatMessage: React.FC<ChatFragment & { diffFromToday: Duration }> = ({
-  content,
-  mentions,
-  author,
-  id,
-  timestamp,
-  attachments,
-  diffFromToday,
-}) => {
+type OwnProps = { diffFromToday: Duration; pauseScroll: boolean; message: ChatFragment };
+
+const ChatMessage: React.FC<OwnProps> = ({ message, diffFromToday, pauseScroll }) => {
+  const { content, mentions, author, id, timestamp, attachments } = message;
   const messageCreationTime = DateTime.fromISO(timestamp ?? '');
 
   const messageRef = React.useRef<HTMLLIElement>(null);
   const [shouldDisplay, setShouldDisplay] = React.useState(false);
 
   React.useEffect(() => {
-    if (shouldDisplay) {
+    if (shouldDisplay && !pauseScroll) {
       messageRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [shouldDisplay]);
+  }, [shouldDisplay, pauseScroll]);
 
   React.useEffect(() => {
     let interval: NodeJS.Timeout;

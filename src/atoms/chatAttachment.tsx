@@ -1,21 +1,23 @@
 import styled from '@emotion/styled';
 
-import { ChatAttachmentFragment } from '../schema/__generated__/chatList.generated';
+import { ChatAttachmentFragment } from '../schema/__generated__/chatMessages.generated';
 
-const Attachment = styled.div`
+const Attachment = styled.div<{ width: number; height: number }>`
   grid-area: attachments;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   max-width: 40vw;
 `;
 
-const DiscordAttachment: React.FC<ChatAttachmentFragment> = ({ url, height, width, filename }) => {
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const DiscordAttachment: React.FC<ChatAttachmentFragment> = ({ url, width, height, filename }) => {
   return (
-    <Attachment>
-      <img
-        alt={filename ?? ''}
-        height={(height ?? 100) * 0.75}
-        width={(width ?? 100) * 0.75}
-        src={url ?? ''}
-      />
+    <Attachment width={width ?? 0} height={height ?? 0}>
+      <Image alt={filename ?? ''} src={url ?? ''} />
     </Attachment>
   );
 };

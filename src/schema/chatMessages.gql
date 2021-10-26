@@ -1,5 +1,7 @@
-query chatList($timeStampGte: String!) {
-  chats(sortBy: TIMESTAMP_ASC, limit: 10, query: { timestamp_gt: $timeStampGte }) {
+# import './chat.fragment.gql'
+
+query chatMessages($query: ChatQueryInput!, $limit: Int!, $sortBy: ChatSortByInput!) {
+  chats(sortBy: $sortBy, limit: $limit, query: $query) {
     id
     ...chat
   }

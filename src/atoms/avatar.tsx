@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { AuthorFragment } from '../schema/__generated__/chatList.generated';
+import { AuthorFragment } from '../schema/__generated__/chatMessages.generated';
 
 const Avatar = styled.div<{ imgSrc: string }>`
   border-radius: 100%;
